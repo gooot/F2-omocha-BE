@@ -69,8 +69,12 @@ public class Auction extends BaseEntity {
 		cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Image> images = new ArrayList<>();
 
+	@OneToMany(mappedBy = "auction", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<AuctionCategory> auctionCategories = new ArrayList<>();
+
 	@OneToOne(mappedBy = "auction")
 	private Conclude conclude;
+
 
 	@Builder
 	public Auction(
@@ -143,6 +147,15 @@ public class Auction extends BaseEntity {
 		if (!(auctionStatus.equals(AuctionStatus.CONCLUDED) || auctionStatus.equals(AuctionStatus.COMPLETED))) {
 			throw new AuctionNotConcludedException(auctionId, auctionStatus);
 		}
+	}
+
+	public void addCategory(Category category) {
+		AuctionCategory auctionCategory = AuctionCategory.builder()
+			.auction(this)
+			.category(category)
+			.build();
+
+		this.auctionCategories.add(auctionCategory);
 	}
 }
 
