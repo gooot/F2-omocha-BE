@@ -49,6 +49,7 @@ public enum ErrorCode {
 	INVALID_BID_UNIT(HttpStatus.BAD_REQUEST, "입찰 금액이 입찰 단위에 유효하지 않습니다."),
 	BID_BELOW_START_PRICE(HttpStatus.BAD_REQUEST, "입찰 가격이 시작 가격보다 낮습니다."),
 	BID_NOT_EXCEEDING_CURRENT_HIGHEST(HttpStatus.BAD_REQUEST, "입찰 가격이 최고가보다 높지 않습니다."),
+	BID_EXCEEDS_INSTANT_BUY_PRICE(HttpStatus.BAD_REQUEST, "입찰 가격이 즉시 구매 가격과 같거나 높습니다."),
 
 	// Qna Code
 	QUESTION_DENY(HttpStatus.FORBIDDEN, "수정,삭제가 거부되었습니다."),

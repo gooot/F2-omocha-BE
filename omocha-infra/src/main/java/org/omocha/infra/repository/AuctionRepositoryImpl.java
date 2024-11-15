@@ -58,6 +58,7 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
 				auction.content,
 				auction.startPrice,
 				auction.bidUnit,
+				auction.instantBuyPrice,
 				auction.auctionStatus,
 				auction.thumbnailPath,
 				auction.nowPrice,

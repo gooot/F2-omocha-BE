@@ -14,6 +14,7 @@ public class AuctionInfo {
 		String content,
 		Long startPrice,
 		Long bidUnit,
+		Long instantBuyPrice,
 		Auction.AuctionStatus auctionStatus,
 		String thumbnailPath,
 		Long nowPrice,
@@ -33,6 +34,7 @@ public class AuctionInfo {
 				auction.getContent(),
 				auction.getStartPrice(),
 				auction.getBidUnit(),
+				auction.getInstantBuyPrice(),
 				auction.getAuctionStatus(),
 				auction.getThumbnailPath(),
 				auction.getNowPrice(),
@@ -53,6 +55,7 @@ public class AuctionInfo {
 		String content,
 		Long startPrice,
 		Long bidUnit,
+		Long instantBuyPrice,
 		Auction.AuctionStatus auctionStatus,
 		String thumbnailPath,
 		Long nowPrice,
@@ -72,6 +75,7 @@ public class AuctionInfo {
 			String content,
 			Long startPrice,
 			Long bidUnit,
+			Long instantBuyPrice,
 			Auction.AuctionStatus auctionStatus,
 			String thumbnailPath,
 			Long nowPrice,
@@ -89,6 +93,7 @@ public class AuctionInfo {
 				content,
 				startPrice,
 				bidUnit,
+				instantBuyPrice,
 				auctionStatus,
 				thumbnailPath,
 				nowPrice,
@@ -110,6 +115,7 @@ public class AuctionInfo {
 				this.content,
 				this.startPrice,
 				this.bidUnit,
+				this.instantBuyPrice,
 				this.auctionStatus,
 				this.thumbnailPath,
 				this.nowPrice,
@@ -176,5 +182,4 @@ public class AuctionInfo {
 			this.likedDate = likedDate;
 		}
 	}
-
 }
