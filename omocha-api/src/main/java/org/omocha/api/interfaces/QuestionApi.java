@@ -1,8 +1,8 @@
 package org.omocha.api.interfaces;
 
-import org.omocha.api.common.auth.jwt.UserPrincipal;
+import org.omocha.api.auth.jwt.UserPrincipal;
 import org.omocha.api.common.response.ResultDto;
-import org.omocha.api.interfaces.dto.QuestionDto;
+import org.omocha.api.qna.dto.QuestionDto;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,8 +1,8 @@
 package org.omocha.api.interfaces;
 
-import org.omocha.api.common.auth.jwt.UserPrincipal;
+import org.omocha.api.auth.jwt.UserPrincipal;
 import org.omocha.api.common.response.ResultDto;
-import org.omocha.api.interfaces.dto.AnswerDto;
+import org.omocha.api.qna.dto.AnswerDto;
 import org.springframework.http.ResponseEntity;
 
 import io.swagger.v3.oas.annotations.Operation;
