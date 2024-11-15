@@ -10,6 +10,8 @@ import org.omocha.domain.auction.chat.ChatService;
 import org.omocha.domain.auction.conclude.ConcludeStore;
 import org.omocha.domain.member.Member;
 import org.omocha.domain.member.MemberReader;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -89,4 +91,14 @@ public class BidServiceImpl implements BidService {
 
 		auction.statusConcluded();
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<BidInfo.RetrieveMyBids> retrieveMyBids(BidCommand.RetrieveMyBids retrieveMyBidsCommand,
+		Pageable sortPage) {
+
+		return bidReader.getMyBidList(retrieveMyBidsCommand.memberId(), retrieveMyBidsCommand.auctionId(), sortPage);
+
+	}
+
 }

@@ -44,4 +44,17 @@ public class AuctionFacade {
 		return auctionService.retrieveMyAuctionLikes(memberId, pageable);
 	}
 
+	public Page<AuctionInfo.RetrieveMyAuctions> retrieveMyAuctions(
+		AuctionCommand.RetrieveMyAuctions retrieveMyAuctionsCommand,
+		Pageable pageable
+	) {
+		return auctionService.retrieveMyAuctions(retrieveMyAuctionsCommand, pageable);
+	}
+
+	public Page<AuctionInfo.RetrieveMyBidAuctions> retrieveMyBidAuctions(
+		AuctionCommand.RetrieveMyBidAuctions retrieveMyBidAuctionsCommand,
+		Pageable pageable
+	) {
+		return auctionService.retrieveMyBidAuctions(retrieveMyBidAuctionsCommand, pageable);
+	}
 }

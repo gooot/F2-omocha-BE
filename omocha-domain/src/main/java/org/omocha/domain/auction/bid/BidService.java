@@ -2,6 +2,9 @@ package org.omocha.domain.auction.bid;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface BidService {
 
 	List<BidInfo.BidList> retrieveBids(Long auctionId);
@@ -11,4 +14,6 @@ public interface BidService {
 	BidInfo.NowPrice retrieveNowPrice(Long auctionId);
 
 	void buyNow(BidCommand.BuyNow buyNowCommand);
+
+	Page<BidInfo.RetrieveMyBids> retrieveMyBids(BidCommand.RetrieveMyBids retrieveMyBidsCommand, Pageable sortPage);
 }

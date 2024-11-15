@@ -2,6 +2,8 @@ package org.omocha.domain.auction.bid;
 
 import java.time.LocalDateTime;
 
+import com.querydsl.core.annotations.QueryProjection;
+
 public class BidInfo {
 
 	public record BidList(
@@ -53,4 +55,19 @@ public class BidInfo {
 			);
 		}
 	}
+
+	public record RetrieveMyBids(
+		Long bidPrice,
+		LocalDateTime createdAt
+	) {
+		@QueryProjection
+		public RetrieveMyBids(
+			Long bidPrice,
+			LocalDateTime createdAt
+		) {
+			this.bidPrice = bidPrice;
+			this.createdAt = createdAt;
+		}
+	}
+
 }

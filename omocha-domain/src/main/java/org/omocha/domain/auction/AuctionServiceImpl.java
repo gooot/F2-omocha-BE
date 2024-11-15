@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.omocha.domain.auction.bid.BidService;
 import org.omocha.domain.exception.AuctionHasBidException;
 import org.omocha.domain.exception.AuctionImageNotFoundException;
 import org.omocha.domain.exception.CategoryNotFoundException;
@@ -140,6 +141,29 @@ public class AuctionServiceImpl implements AuctionService {
 	@Override
 	public Page<AuctionInfo.RetrieveMyAuctionLikes> retrieveMyAuctionLikes(Long memberId, Pageable pageable) {
 		return likeReader.getMyAuctionLikes(memberId, pageable);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<AuctionInfo.RetrieveMyAuctions> retrieveMyAuctions(
+		AuctionCommand.RetrieveMyAuctions retrieveMyAuctionsCommand, Pageable pageable) {
+
+		// TODO : AuctionStatus 에 따라 필요한 값이 다름
+		// 	biidng - nowPrice , conclude - concludePrice
+		return auctionReader.getMyAuctionList(
+			retrieveMyAuctionsCommand.memberId(),
+			retrieveMyAuctionsCommand.auctionStatus(),
+			pageable
+		);
+
+	}
+
+	@Override
+	public Page<AuctionInfo.RetrieveMyBidAuctions> retrieveMyBidAuctions(
+		AuctionCommand.RetrieveMyBidAuctions retrieveMyBidAuctionsCommand,
+		Pageable pageable
+	) {
+		return auctionReader.getMyBidAuctionList(retrieveMyBidAuctionsCommand.memberId(), pageable);
 	}
 
 }

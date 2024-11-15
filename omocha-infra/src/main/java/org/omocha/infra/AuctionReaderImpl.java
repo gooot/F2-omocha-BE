@@ -51,9 +51,15 @@ public class AuctionReaderImpl implements AuctionReader {
 		auctionRepository.delete(auction);
 	}
 
-	// @Override
-	// public Page<Auction> searchMyAuctionList(Long memberId, AuctionStatus auctionStatus, Pageable pageable) {
-	// 	return auctionRepository.searchMyAuctionList(memberId, auctionStatus, pageable);
-	// }
+	@Override
+	public Page<AuctionInfo.RetrieveMyAuctions> getMyAuctionList(Long memberId, Auction.AuctionStatus auctionStatus,
+		Pageable pageable) {
+		return auctionRepository.getMyAuctionList(memberId, auctionStatus, pageable);
+	}
+
+	@Override
+	public Page<AuctionInfo.RetrieveMyBidAuctions> getMyBidAuctionList(Long memberId, Pageable sortPage) {
+		return auctionRepository.getMyBidAuctionList(memberId, sortPage);
+	}
 
 }

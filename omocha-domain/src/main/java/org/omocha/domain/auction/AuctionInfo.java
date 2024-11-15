@@ -182,4 +182,57 @@ public class AuctionInfo {
 			this.likedDate = likedDate;
 		}
 	}
+
+	public record RetrieveMyAuctions(
+		Long auctionId,
+		String title,
+		Auction.AuctionStatus auctionStatus,
+		Long nowPrice,
+		LocalDateTime endDate,
+		String thumbnailPath
+	) {
+
+		@QueryProjection
+		public RetrieveMyAuctions(
+			Long auctionId,
+			String title,
+			Auction.AuctionStatus auctionStatus,
+			Long nowPrice,
+			LocalDateTime endDate,
+			String thumbnailPath
+		) {
+			this.auctionId = auctionId;
+			this.title = title;
+			this.auctionStatus = auctionStatus;
+			this.nowPrice = nowPrice;
+			this.endDate = endDate;
+			this.thumbnailPath = thumbnailPath;
+		}
+	}
+
+	// TODO : 리뷰 추가 이후 리뷰 유무 추가
+	public record RetrieveMyBidAuctions(
+		Long auctionId,
+		String title,
+		Auction.AuctionStatus auctionStatus,
+		String thumbnailPath,
+		String bidStatus
+	) {
+		@QueryProjection
+		public RetrieveMyBidAuctions(
+			Long auctionId,
+			String title,
+			Auction.AuctionStatus auctionStatus,
+			String thumbnailPath,
+			String bidStatus
+		) {
+			this.auctionId = auctionId;
+			this.title = title;
+			this.auctionStatus = auctionStatus;
+			this.thumbnailPath = thumbnailPath;
+			this.bidStatus = bidStatus;
+		}
+
+	}
+
 }

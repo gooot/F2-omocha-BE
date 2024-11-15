@@ -5,6 +5,8 @@ import java.util.List;
 import org.omocha.domain.auction.bid.BidCommand;
 import org.omocha.domain.auction.bid.BidInfo;
 import org.omocha.domain.auction.bid.BidService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -33,5 +35,12 @@ public class BidFacade {
 
 	public void buyNow(BidCommand.BuyNow buyNowCommand) {
 		bidService.buyNow(buyNowCommand);
+	}
+
+	public Page<BidInfo.RetrieveMyBids> retrieveMyBids(
+		BidCommand.RetrieveMyBids retrieveMyBidsCommand,
+		Pageable sortPage
+	) {
+		return bidService.retrieveMyBids(retrieveMyBidsCommand, sortPage);
 	}
 }

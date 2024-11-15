@@ -2,6 +2,7 @@ package org.omocha.infra.repository;
 
 import java.util.List;
 
+import org.omocha.domain.auction.Auction;
 import org.omocha.domain.auction.AuctionCommand;
 import org.omocha.domain.auction.AuctionInfo;
 import org.springframework.data.domain.Page;
@@ -13,9 +14,12 @@ public interface AuctionRepositoryCustom {
 		List<Long> categoryIds,
 		Pageable pageable
 	);
-	// Page<Auction> searchMyAuctionList(
-	// 	Long memberId,
-	// 	AuctionStatus auctionStatus,
-	// 	Pageable pageable
-	// );
+
+	Page<AuctionInfo.RetrieveMyAuctions> getMyAuctionList(
+		Long memberId,
+		Auction.AuctionStatus auctionStatus,
+		Pageable pageable
+	);
+
+	Page<AuctionInfo.RetrieveMyBidAuctions> getMyBidAuctionList(Long memberId, Pageable sortPage);
 }

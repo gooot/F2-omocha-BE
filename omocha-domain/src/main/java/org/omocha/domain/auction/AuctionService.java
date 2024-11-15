@@ -22,4 +22,12 @@ public interface AuctionService {
 		Long memberId,
 		Pageable pageable
 	);
+
+	Page<AuctionInfo.RetrieveMyAuctions> retrieveMyAuctions(
+		AuctionCommand.RetrieveMyAuctions retrieveMyAuctionsCommand,
+		Pageable pageable
+	);
+
+	Page<AuctionInfo.RetrieveMyBidAuctions> retrieveMyBidAuctions(
+		AuctionCommand.RetrieveMyBidAuctions retrieveMyBidAuctionsCommand, Pageable pageable);
 }
