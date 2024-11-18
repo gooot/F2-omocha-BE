@@ -15,7 +15,6 @@ public class AuctionDto {
 		String content,
 		Long startPrice,
 		Long bidUnit,
-		Long instantBuyPrice,
 		@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 		LocalDateTime startDate,
 		@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -47,6 +46,7 @@ public class AuctionDto {
 		Long nowPrice,
 		Long concludePrice,
 		Long bidCount,
+		Long likeCount,
 		boolean isLiked,
 		@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 		LocalDateTime startDate,
@@ -70,6 +70,7 @@ public class AuctionDto {
 		String thumbnailPath,
 		Long nowPrice,
 		Long bidCount,
+		Long likeCount,
 		@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 		LocalDateTime startDate,
 		@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

@@ -69,6 +69,7 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
 				auction.nowPrice,
 				conclude.concludePrice,
 				auction.bidCount,
+				auction.likeCount,
 				isLiked(memberId),
 				auction.startDate,
 				auction.endDate,

@@ -1,6 +1,8 @@
 package org.omocha.domain.member;
 
+import org.apache.commons.lang3.StringUtils;
 import org.omocha.domain.image.ImageProvider;
+import org.omocha.domain.likes.LikeReader;
 import org.omocha.domain.member.exception.MemberAlreadyExistException;
 import org.omocha.domain.member.validate.MemberValidator;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ public class MemberServiceImpl implements MemberService {
 	private final MemberValidator memberValidator;
 	private final MemberReader memberReader;
 	private final ImageProvider imageProvider;
+	private final LikeReader likeReader;
 	private final RandomNickNameGenerator randomNickNameGenerator;
 
 	@Override
@@ -27,10 +30,17 @@ public class MemberServiceImpl implements MemberService {
 
 		Member member = memberReader.getMember(memberId);
 
+		String loginType = "general";
+		if (StringUtils.isNotBlank(member.getProvider())) {
+			loginType = member.getProvider();
+		}
+
+		int likeCount = likeReader.getMemberLikeCount(memberId);
+
 		// TODO : 개선 필요(서버측 문제?) , Exception
 		log.debug("find me finished for member {}", memberId);
 
-		return MemberInfo.RetrieveCurrentMemberInfo.toInfo(member);
+		return MemberInfo.RetrieveCurrentMemberInfo.toInfo(member, loginType, likeCount);
 	}
 
 	@Override
