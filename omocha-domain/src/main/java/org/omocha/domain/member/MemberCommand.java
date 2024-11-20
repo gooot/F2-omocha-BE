@@ -1,10 +1,14 @@
 package org.omocha.domain.member;
 
+import java.time.LocalDate;
+
 import org.omocha.domain.common.Role;
 import org.omocha.domain.member.vo.Email;
 import org.omocha.domain.member.vo.PhoneNumber;
 import org.omocha.domain.review.rating.Rating;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Builder;
 
@@ -45,7 +49,9 @@ public class MemberCommand {
 	public record ModifyMyInfo(
 		Long memberId,
 		String nickName,
-		PhoneNumber phoneNumber
+		PhoneNumber phoneNumber,
+		@JsonFormat(pattern = "yyyy-MM-dd")
+		LocalDate birth
 	) {
 	}
 

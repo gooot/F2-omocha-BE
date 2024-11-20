@@ -97,7 +97,8 @@ public class MemberServiceImpl implements MemberService {
 
 		member.updateMember(
 			modifyMyInfoCommand.nickName(),
-			modifyMyInfoCommand.phoneNumber()
+			modifyMyInfoCommand.phoneNumber(),
+			modifyMyInfoCommand.birth()
 		);
 
 		log.debug("modify member finished for member {}", modifyMyInfoCommand.memberId());
