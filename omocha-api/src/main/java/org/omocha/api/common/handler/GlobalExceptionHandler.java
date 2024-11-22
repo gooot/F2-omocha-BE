@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +25,12 @@ public class GlobalExceptionHandler {
 		HttpServletRequest request
 	) {
 		// TODO: 로그에 치환문자{} 를 3개 이상 사용할 경우 Object[] 를 생성하는 비용이 발생
-		log.error("Request URI: {}, Method: {}, Params: {}",
+		log.info("Request URI: {}, Method: {}, Params: {}",
 			request.getRequestURI(),
 			request.getMethod(),
-			request.getQueryString(),
-			e);
+			request.getQueryString()
+		);
+		log.info(e.getMessage());
 
 		ResultDto<Object> resultDto = ResultDto.res(
 			e.getErrorCode().getStatusCode(),
@@ -39,12 +41,30 @@ public class GlobalExceptionHandler {
 			.body(resultDto);
 	}
 
+	// TODO : Global Handler에서 exception 처리 안하기
+	@ExceptionHandler(MissingServletRequestPartException.class)
+	public ResponseEntity<ResultDto<Object>> missingServletRequestPartException(
+		MissingServletRequestPartException e,
+		HttpServletRequest request
+	) {
+		log.warn("errorCode: {}, url: {}, message: {}",
+			REQUEST_PART_NOT_FOUND, request.getRequestURI(), e.getMessage(), e);
+
+		ResultDto<Object> resultDto = ResultDto.res(
+			REQUEST_PART_NOT_FOUND.getStatusCode(),
+			REQUEST_PART_NOT_FOUND.getDescription()
+		);
+		return ResponseEntity
+			.status(REQUEST_PART_NOT_FOUND.getHttpStatus())
+			.body(resultDto);
+	}
+
 	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
 	public ResponseEntity<ResultDto<Object>> handleHttpMediaTypeNotSupported(
 		HttpMediaTypeNotSupportedException e,
 		HttpServletRequest request
 	) {
-		log.error("errorCode: {}, url: {}, message: {}",
+		log.warn("errorCode: {}, url: {}, message: {}",
 			UNSUPPORTED_MEDIA_TYPE, request.getRequestURI(), e.getMessage(), e);
 
 		ResultDto<Object> resultDto = ResultDto.res(
