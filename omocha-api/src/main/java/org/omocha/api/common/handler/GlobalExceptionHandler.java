@@ -2,11 +2,16 @@ package org.omocha.api.common.handler;
 
 import static org.omocha.domain.common.code.ErrorCode.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.omocha.api.common.response.ResultDto;
 import org.omocha.domain.common.exception.OmochaException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -21,25 +26,18 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-	// TODO: 추후 controller 내부로 리팩토링 필요
-
 	@ExceptionHandler(OmochaException.class)
 	public ResponseEntity<ResultDto<Object>> handleOmochaException(
 		OmochaException e,
 		HttpServletRequest request
 	) {
-		// TODO: 로그에 치환문자{} 를 3개 이상 사용할 경우 Object[] 를 생성하는 비용이 발생
-		log.warn("Request URI: {}, Method: {}, Params: {}",
-			request.getRequestURI(),
-			request.getMethod(),
-			request.getQueryString()
-		);
-		log.info(e.getMessage());
+		warnLogging(e, request);
 
 		ResultDto<Object> resultDto = ResultDto.res(
 			e.getErrorCode().getStatusCode(),
 			e.getErrorCode().getDescription()
 		);
+
 		return ResponseEntity
 			.status(e.getErrorCode().getHttpStatus())
 			.body(resultDto);
@@ -47,17 +45,17 @@ public class GlobalExceptionHandler {
 
 	// TODO : Global Handler에서 exception 처리 안하기
 	@ExceptionHandler(MissingServletRequestPartException.class)
-	public ResponseEntity<ResultDto<Object>> missingServletRequestPartException(
+	public ResponseEntity<ResultDto<Object>> handleMissingServletRequestPart(
 		MissingServletRequestPartException e,
 		HttpServletRequest request
 	) {
-		log.warn("errorCode: {}, url: {}, message: {}",
-			REQUEST_PART_NOT_FOUND, request.getRequestURI(), e.getMessage(), e);
+		warnLogging(e, request);
 
 		ResultDto<Object> resultDto = ResultDto.res(
 			REQUEST_PART_NOT_FOUND.getStatusCode(),
 			REQUEST_PART_NOT_FOUND.getDescription()
 		);
+
 		return ResponseEntity
 			.status(REQUEST_PART_NOT_FOUND.getHttpStatus())
 			.body(resultDto);
@@ -68,13 +66,13 @@ public class GlobalExceptionHandler {
 		HttpMediaTypeNotSupportedException e,
 		HttpServletRequest request
 	) {
-		log.warn("errorCode: {}, url: {}, message: {}",
-			UNSUPPORTED_MEDIA_TYPE, request.getRequestURI(), e.getMessage(), e);
+		warnLogging(e, request);
 
 		ResultDto<Object> resultDto = ResultDto.res(
 			UNSUPPORTED_MEDIA_TYPE.getStatusCode(),
 			UNSUPPORTED_MEDIA_TYPE.getDescription()
 		);
+
 		return ResponseEntity
 			.status(UNSUPPORTED_MEDIA_TYPE.getHttpStatus())
 			.body(resultDto);
@@ -85,8 +83,7 @@ public class GlobalExceptionHandler {
 		MaxUploadSizeExceededException e,
 		HttpServletRequest request
 	) {
-		log.warn("errorCode: {}, url: {}, message: {}",
-			MAX_UPLOAD_SIZE_FAIL, request.getRequestURI(), e.getMessage(), e);
+		warnLogging(e, request);
 
 		ResultDto<Object> resultDto = ResultDto.res(
 			MAX_UPLOAD_SIZE_FAIL.getStatusCode(),
@@ -99,12 +96,11 @@ public class GlobalExceptionHandler {
 
 	// Request Json 파싱 에러
 	@ExceptionHandler(HttpMessageNotReadableException.class)
-	public ResponseEntity<ResultDto<Object>> onHttpMessageNotReadable(
+	public ResponseEntity<ResultDto<Object>> handleHttpMessageNotReadable(
 		HttpMessageNotReadableException e,
 		HttpServletRequest request
 	) {
-		log.warn("errorCode: {}, url: {}, message: {}",
-			BAD_REQUEST_INVALID_FIELD, request.getRequestURI(), e.getMessage(), e);
+		warnLogging(e, request);
 
 		if (e.getCause() instanceof MismatchedInputException mismatchedInputException) {
 
@@ -128,16 +124,62 @@ public class GlobalExceptionHandler {
 			.body(generalErrorResult);
 	}
 
+	// @Valid NotNull 예외처리
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<ResultDto<Object>> handlerMethodArgumentNotValid(
+		MethodArgumentNotValidException e,
+		HttpServletRequest request
+	) {
+		warnLogging(e, request);
+
+		List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
+
+		String fieldNames = fieldErrors.stream()
+			.map(FieldError::getField)
+			.collect(Collectors.joining(", "));
+
+		ResultDto<Object> resultDto = ResultDto.res(
+			NOT_NULL_FIELD.getStatusCode(),
+			"[" + fieldNames + "], " + NOT_NULL_FIELD.getDescription()
+		);
+
+		return ResponseEntity
+			.status(NOT_NULL_FIELD.getHttpStatus())
+			.body(resultDto);
+	}
+
+	private void warnLogging(Exception e, HttpServletRequest request) {
+		log.warn("Client IP: {}, Request URI: {}, Method: {}, Params: {}",
+			request.getRemoteAddr(),
+			request.getRequestURI(),
+			request.getMethod(),
+			request.getQueryString()
+		);
+
+		log.warn("Exception: {}, Message: {}",
+			e.getClass().getName(),
+			e.getMessage()
+		);
+	}
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ResultDto<Object>> handleGeneralException(
 		Exception e,
 		HttpServletRequest request
 	) {
-		log.error("url: {}, message: {}", request.getRequestURL(), e.getMessage(), e);
+		log.error("Client IP: {}, Request URI: {}, Method: {}, Params: {}",
+			request.getRemoteAddr(),
+			request.getRequestURI(),
+			request.getMethod(),
+			request.getQueryString(),
+			e
+		);
+
 		ResultDto<Object> resultDto = ResultDto.res(
 			INTERNAL_SERVER_ERROR.getStatusCode(),
 			INTERNAL_SERVER_ERROR.getDescription()
 		);
+
 		return ResponseEntity
 			.status(INTERNAL_SERVER_ERROR.getHttpStatus())
 			.body(resultDto);
