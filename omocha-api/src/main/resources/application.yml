@@ -30,6 +30,22 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 100MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${OMOCHA_EMAIL}
+    password: ${OMOCHA_EMAIL_PASSWORD}
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          timeout: 5000
+          connection-timeout: 5000
+          write-timeout: 5000
 
 logging:
   file:
@@ -38,6 +54,8 @@ logging:
 jwt:
   access_secret: ${JWT_ACCESS_SECRET}
   refresh_secret: ${JWT_REFRESH_SECRET}
+
+
 
 cloud:
   aws:
