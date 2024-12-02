@@ -1,5 +1,6 @@
 package org.omocha.api.auth;
 
+import org.omocha.api.auth.dto.AuthDto;
 import org.omocha.api.auth.jwt.JwtProvider;
 import org.omocha.api.common.util.PasswordManager;
 import org.omocha.domain.member.MemberCommand;
@@ -9,7 +10,6 @@ import org.omocha.domain.member.validate.MemberValidator;
 import org.omocha.domain.member.vo.Email;
 import org.springframework.stereotype.Service;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,13 +31,14 @@ public class AuthFacade {
 		return memberValidator.isEmailDuplicateForOauth(email);
 	}
 
-	public void memberLogin(MemberCommand.MemberLogin memberLoginCommand, HttpServletResponse response) {
+	public AuthDto.JwtResponse loginMember(MemberCommand.LoginMember loginMemberCommand) {
+		MemberInfo.Login loginInfo = memberService.retrieveMember(loginMemberCommand.email());
+		passwordManager.match(loginMemberCommand.password(), loginInfo.encryptedPassword(), loginInfo.memberId());
 
-		MemberInfo.Login loginInfo = memberService.retrieveMember(memberLoginCommand.email());
+		return jwtProvider.generateToken(loginInfo.memberId());
+	}
 
-		passwordManager.match(memberLoginCommand.password(), loginInfo.encryptedPassword(), loginInfo.memberId());
-
-		jwtProvider.generateAccessToken(loginInfo.memberId(), response);
-		jwtProvider.generateRefreshToken(loginInfo.memberId(), response);
+	public AuthDto.JwtResponse reissueToken(MemberCommand.ReissueToken reissueTokenCommand) {
+		return jwtProvider.reissueToken(reissueTokenCommand);
 	}
 }

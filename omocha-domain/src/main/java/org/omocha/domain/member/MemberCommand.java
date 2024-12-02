@@ -32,11 +32,16 @@ public class MemberCommand {
 		}
 	}
 
-	public record MemberLogin(
+	public record LoginMember(
 		Email email,
 		String password
 	) {
+	}
 
+	public record ReissueToken(
+		Long memberId,
+		String refreshToken
+	) {
 	}
 
 	@Builder
@@ -44,7 +49,6 @@ public class MemberCommand {
 		String provider,
 		String providerId
 	) {
-
 	}
 
 	public record ModifyMyInfo(
@@ -67,6 +71,5 @@ public class MemberCommand {
 		Long memberId,
 		MultipartFile profileImage
 	) {
-
 	}
 }
