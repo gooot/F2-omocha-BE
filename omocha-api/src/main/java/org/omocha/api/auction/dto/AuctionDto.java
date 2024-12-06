@@ -30,7 +30,8 @@ public class AuctionDto {
 	}
 
 	public record AuctionAddResponse(
-		Long auctionId
+		Long auctionId,
+		boolean isInstantBuy
 	) {
 	}
 
@@ -42,6 +43,7 @@ public class AuctionDto {
 	public record AuctionSearchResponse(
 		Long auctionId,
 		Long memberId,
+		Long categoryId,
 		String title,
 		String content,
 		Price startPrice,
@@ -104,6 +106,7 @@ public class AuctionDto {
 		String thumbnailPath,
 		Price startPrice,
 		Price nowPrice,
+		Price instantBuyPrice,
 		Auction.AuctionStatus auctionStatus,
 		@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 		LocalDateTime startDate,

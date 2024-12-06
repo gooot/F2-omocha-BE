@@ -12,6 +12,20 @@ import com.querydsl.core.annotations.QueryProjection;
 
 public class AuctionInfo {
 
+	public record AddAuction(
+		Long auctionId,
+		boolean isInstantBuy
+	) {
+		public static AuctionInfo.AddAuction toInfo(
+			Auction auction
+		) {
+			return new AuctionInfo.AddAuction(
+				auction.getAuctionId(),
+				(auction.getInstantBuyPrice() != null)
+			);
+		}
+	}
+
 	public record RetrieveAuction(
 		Long auctionId,
 		Long memberId,
@@ -66,6 +80,7 @@ public class AuctionInfo {
 	public record SearchAuction(
 		Long auctionId,
 		Long memberId,
+		Long categoryId,
 		String title,
 		String content,
 		Price startPrice,
@@ -87,6 +102,7 @@ public class AuctionInfo {
 		public SearchAuction(
 			Long auctionId,
 			Long memberId,
+			Long categoryId,
 			String title,
 			String content,
 			Price startPrice,
@@ -106,6 +122,7 @@ public class AuctionInfo {
 			this(
 				auctionId,
 				memberId,
+				categoryId,
 				title,
 				content,
 				startPrice,
@@ -129,6 +146,7 @@ public class AuctionInfo {
 			return new SearchAuction(
 				this.auctionId,
 				this.memberId,
+				this.categoryId,
 				this.title,
 				this.content,
 				this.startPrice,
@@ -171,6 +189,7 @@ public class AuctionInfo {
 		String thumbnailPath,
 		Price startPrice,
 		Price nowPrice,
+		Price instantBuyPrice,
 		Auction.AuctionStatus auctionStatus,
 		LocalDateTime startDate,
 		LocalDateTime endDate,
@@ -185,6 +204,7 @@ public class AuctionInfo {
 			String thumbnailPath,
 			Price startPrice,
 			Price nowPrice,
+			Price instantBuyPrice,
 			Auction.AuctionStatus auctionStatus,
 			LocalDateTime startDate,
 			LocalDateTime endDate,
@@ -197,6 +217,7 @@ public class AuctionInfo {
 			this.thumbnailPath = thumbnailPath;
 			this.startPrice = startPrice;
 			this.nowPrice = nowPrice;
+			this.instantBuyPrice = instantBuyPrice;
 			this.auctionStatus = auctionStatus;
 			this.startDate = startDate;
 			this.endDate = endDate;
