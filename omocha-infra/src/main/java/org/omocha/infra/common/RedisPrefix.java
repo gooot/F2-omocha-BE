@@ -11,7 +11,10 @@ public enum RedisPrefix {
 	TOKEN_PREFIX("RefreshToken:"),
 	REDISSON_LOCK_PREFIX("RedisLock:"),
 	HIGHEST_BID_PREFIX("HighestBid:"),
-	SSE_EMITTER_PREFIX("SSEEmitter:");
+	SSE_EMITTER_PREFIX("SSEEmitter:"),
+	TOKEN_PREFIX("RefreshToken:");
+
+
 
 	private final String prefix;
 
