@@ -8,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface BidReader {
 
-	public List<Bid> getBidList(Long auctionId);
+	List<Bid> getBidList(Long auctionId);
 
-	public Optional<Bid> findHighestBid(Long auctionId);
+	Optional<Bid> findHighestBid(Long auctionId);
 
 	Page<BidInfo.RetrieveMyBids> getMyBidList(
 		Long memberId,
@@ -18,4 +18,7 @@ public interface BidReader {
 		Pageable sortPage
 	);
 
+	BidCacheDto findNowPrice(Long auctionId);
+
+	List<Long> getBuyerList(Long auctionId);
 }

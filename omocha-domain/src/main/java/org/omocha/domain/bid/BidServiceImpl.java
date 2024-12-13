@@ -2,6 +2,7 @@ package org.omocha.domain.bid;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.omocha.domain.auction.Auction;
 import org.omocha.domain.auction.AuctionReader;
@@ -13,6 +14,7 @@ import org.omocha.domain.common.annotation.DistributedLock;
 import org.omocha.domain.conclude.ConcludeStore;
 import org.omocha.domain.member.Member;
 import org.omocha.domain.member.MemberReader;
+import org.omocha.domain.notification.NotificationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,7 @@ public class BidServiceImpl implements BidService {
 	private final MemberReader memberReader;
 	private final ConcludeStore concludeStore;
 	private final ChatService chatService;
+	private final NotificationService notificationService;
 
 	// TODO : 동시성 해결 해결 해야 함
 
@@ -63,7 +66,7 @@ public class BidServiceImpl implements BidService {
 
 		Bid bid = bidStore.store(auction, member, bidPrice);
 
-		HighestBidManager.setHighestBid(auctionId, bid);
+		notificationService.sendBidEvent(auctionId, auction.getMemberId(), buyerMemberId);
 
 		return BidInfo.AddBid.toInfo(bid);
 	}
@@ -71,7 +74,7 @@ public class BidServiceImpl implements BidService {
 	@Override
 	@Transactional(readOnly = true)
 	public BidInfo.NowPrice retrieveNowPrice(Long auctionId) {
-		return HighestBidManager.getCurrentHighestBid(auctionId, bidReader)
+		return getCurrentHighestBid(auctionId)
 			.map(BidInfo.NowPrice::toInfo)
 			.orElseGet(() -> new BidInfo.NowPrice(new Price(0L), null, LocalDateTime.now()));
 	}
@@ -102,6 +105,16 @@ public class BidServiceImpl implements BidService {
 
 		return bidReader.getMyBidList(retrieveMyBidsCommand.memberId(), retrieveMyBidsCommand.auctionId(), sortPage);
 
+	}
+
+	private BidCacheDto getHighestBid(Long auctionId) {
+		return bidReader.findNowPrice(auctionId);
+	}
+
+	private Optional<BidCacheDto> getCurrentHighestBid(Long auctionId) {
+		return Optional.ofNullable(getHighestBid(auctionId))
+			.or(() -> bidReader.findHighestBid(auctionId)
+				.map(BidCacheDto::toRedis));
 	}
 
 }
