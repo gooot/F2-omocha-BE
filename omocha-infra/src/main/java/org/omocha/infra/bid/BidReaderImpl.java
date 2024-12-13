@@ -44,4 +44,8 @@ public class BidReaderImpl implements BidReader {
 		return bidCacheRepository.findHighestBid(auctionId);
 	}
 
+	@Override
+	public List<Long> getBuyerList(Long auctionId) {
+		return bidRepository.findGroupedBuyerMemberIdsByAuctionId(auctionId);
+	}
 }

@@ -14,6 +14,7 @@ import org.omocha.domain.common.annotation.DistributedLock;
 import org.omocha.domain.conclude.ConcludeStore;
 import org.omocha.domain.member.Member;
 import org.omocha.domain.member.MemberReader;
+import org.omocha.domain.notification.NotificationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ public class BidServiceImpl implements BidService {
 	private final MemberReader memberReader;
 	private final ConcludeStore concludeStore;
 	private final ChatService chatService;
+	private final NotificationService notificationService;
 
 	// TODO : 동시성 해결 해결 해야 함
 
@@ -63,6 +65,8 @@ public class BidServiceImpl implements BidService {
 		Member member = memberReader.getMember(buyerMemberId);
 
 		Bid bid = bidStore.store(auction, member, bidPrice);
+
+		notificationService.sendBidEvent(auctionId, auction.getMemberId(), buyerMemberId);
 
 		return BidInfo.AddBid.toInfo(bid);
 	}
