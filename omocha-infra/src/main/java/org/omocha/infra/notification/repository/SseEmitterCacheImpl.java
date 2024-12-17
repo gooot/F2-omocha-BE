@@ -2,11 +2,13 @@ package org.omocha.infra.notification.repository;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.omocha.domain.notification.Notification;
 import org.omocha.infra.common.RedisPrefix;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -20,7 +22,8 @@ import lombok.Getter;
 public class SseEmitterCacheImpl implements SseEmitterCache {
 
 	private final RedisTemplate<String, String> template;
-	private final ConcurrentHashMap<UUID, SseEmitter> emitterMap = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<String, SseEmitter> emitters = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<String, Notification> eventCache = new ConcurrentHashMap<>();
 
 	public SseEmitterCacheImpl(StringRedisTemplate redisTemplate) {
 		this.template = redisTemplate;
@@ -36,23 +39,47 @@ public class SseEmitterCacheImpl implements SseEmitterCache {
 
 		List<SseEmitter> sseEmitters = new ArrayList<>();
 		emitterIdList.forEach(emitterId -> {
-			sseEmitters.add(emitterMap.get(UUID.fromString(emitterId)));
+			sseEmitters.add(emitters.get(emitterId));
 		});
 
 		return sseEmitters;
 	}
 
 	@Override
-	public void storeSseEmitter(Long memberId, UUID emitterId, SseEmitter emitter) {
-		emitterMap.put(emitterId, emitter);
-		template.opsForSet().add(RedisPrefix.SSE_EMITTER_PREFIX.getPrefix() + memberId, emitterId.toString());
+	public Map<String, Notification> getEventCacheList(Long memberId) {
+		Map<String, Notification> result = new HashMap<>();
+
+		eventCache.entrySet().removeIf(entry -> {
+			boolean matches = entry.getKey().startsWith(String.valueOf(memberId));
+			if (matches) {
+				result.put(entry.getKey(), entry.getValue());
+			}
+
+			return matches;
+		});
+
+		return result;
 	}
 
 	@Override
-	public void removeSseEmitter(Long memberId, UUID emitterId) {
-		emitterMap.remove(emitterId);
-		template.opsForSet().remove(RedisPrefix.SSE_EMITTER_PREFIX.getPrefix() + memberId, emitterId.toString());
+	public void storeSseEmitter(
+		Long memberId,
+		String emitterId,
+		SseEmitter emitter,
+		Long EXPIRATION
+	) {
+		emitters.put(emitterId, emitter);
+		template.opsForSet().add(RedisPrefix.SSE_EMITTER_PREFIX.getPrefix() + memberId, emitterId);
 	}
 
-	// TODO: 비어있는 memberId 삭제하는 로직 필요
+	@Override
+	public void storeNotificationCache(String eventId, Notification notification) {
+		eventCache.put(eventId, notification);
+	}
+
+	@Override
+	public void removeSseEmitter(Long memberId, String emitterId) {
+		emitters.remove(emitterId);
+		template.opsForSet().remove(RedisPrefix.SSE_EMITTER_PREFIX.getPrefix() + memberId, emitterId);
+	}
 }

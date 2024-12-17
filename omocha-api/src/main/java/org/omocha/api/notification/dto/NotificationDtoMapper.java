@@ -14,7 +14,9 @@ import org.omocha.domain.notification.NotificationCommand;
 )
 public interface NotificationDtoMapper {
 
-	NotificationCommand.Connect toConnectCommand(Long memberId);
+	NotificationCommand.Connect toCommand(Long memberId, String lastEventId);
 
-	NotificationCommand.Read toReadCommand(Long notificationId);
+	NotificationCommand.Read toCommand(Long memberId, Long notificationId);
+
+	NotificationCommand.ReadAll toCommand(Long memberId, NotificationDto.ReadAll readAllDto);
 }
