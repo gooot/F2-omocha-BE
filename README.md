@@ -1,6 +1,6 @@
 
 
-<img src="https://github.com/limbaba1120/limbaba1120_images/blob/master/notion_image/omocha_logo.gif" width="100%" max-width="200px" max-height="200px"/>
+<img src="https://github.com/limbaba1120/limbaba1120_images/blob/master/notion_image/omocha_logo_v3.gif" width="100%" max-width="200px" max-height="200px"/>
 
 
 ## 📖 **프로젝트 소개**
