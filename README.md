@@ -99,7 +99,7 @@
 
 ## **ERD**
 
-![erd](https://github.com/gooot/ProjectImage/blob/main/Omocha/erd/omacha.png)
+![erd](https://github.com/gooot/ProjectImage/blob/main/Omocha/erd/omachaERD.png)
 
 ## **System Architecture**
 
