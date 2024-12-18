@@ -44,7 +44,7 @@
 
 | 채팅                                                                                                                                                                                                                            | 마이페이지                                                                                                              |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
-| <p align="center"><img src="https://github.com/gooot/ProjectImage/blob/main/Omocha/v1/chat.gif" width="350"></p>                                                                                                              | <p align="center"><img src="https://github.com/gooot/ProjectImage/blob/main/Omocha/v1/mypage.gif" width="350"></p> |
+| <p align="center"><img src="https://github.com/gooot/ProjectImage/blob/main/Omocha/v2/chat.gif" width="350"></p>                                                                                                              | <p align="center"><img src="https://github.com/gooot/ProjectImage/blob/main/Omocha/v2/mypage.gif" width="350"></p> |
 | 낙찰 후 자동으로 채팅방이 생성됩니다. 판매자와 구매자가 거래를 할 수 있습니다.                                                                                                                                                                                 | 회원 정보(찜 목록 / 판매 내역 / 입찰 내역)를 확인하고 개인 설정을 관리할 수 있습니다.                                                               |
 | - 채팅방에 들어가면 WebSocket이 연결되고 상대방에게 메시지를 보낼 수 있음.   <br/> - STOMP(Simple/Streaming Text Oriented Messaging Protocal) 텍스트 기반의 메세지 프로토콜 사용 <br/> - 채팅방 입장: Topic 구독 <br/> - 채팅방에서 메세지를 송수신: 해당 Topic으로 메세지를 송신(pub), 메세지를 수신(sub) | - 회원의 기본 정보(비밀번호, 프로필 등)를 변경할 수 있습니다. <br/>- 비밀번호 변경은 일반 회원가입자만 사용 가능합니다.  <br/>- 거래내역에서 입찰 내역과 판매내역을 확인 할 수 있습니다. |
 
@@ -54,7 +54,7 @@
 
 | QnA                                                                                                             | Like(찜)                                                                                                          |
 |-----------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
-| <p align="center"><img src="https://github.com/gooot/ProjectImage/blob/main/Omocha/v1/qna.gif" width="350"></p> | <p align="center"><img src="https://github.com/gooot/ProjectImage/blob/main/Omocha/v1/like.gif" width="350"></p> |
+| <p align="center"><img src="https://github.com/gooot/ProjectImage/blob/main/Omocha/v2/QA.gif" width="350"></p> | <p align="center"><img src="https://github.com/gooot/ProjectImage/blob/main/Omocha/v2/like.gif" width="350"></p> |
 | 경매 물품에 대해 질문,답변을 할 수 있습니다.                                                                                      | 관심있는 경매물을 찜하고 한 곳에 모아 쉽게 확인 할 수 있습니다.                                                                            |                                                                                      |
 | - 회원 : 경매 물품에 대한 질문을 작성 할 수 있습니다.<br/>- 답변이 달리면 추가 수정 및 삭제가 `불가`합니다. <br/> - 판매자 : 답변을 작성할 수 있습니다.              | - 경매물 상단의 버튼을 클릭하여 `찜` 할 수 있습니다.<br/>- 이후 다시 누르게 되면 `찜`이 해제됩니다.                                                  |
 
