@@ -97,6 +97,10 @@
 
 </details>
 
+## **ERD**
+
+![erd](https://github.com/gooot/ProjectImage/blob/main/Omocha/erd/omacha.png)
+
 ## **System Architecture**
 
 ![SA](https://github.com/gooot/ProjectImage/blob/main/Omocha/v1/SAv2.png)
