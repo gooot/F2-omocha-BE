@@ -24,7 +24,7 @@
 
 | 로그인 & 회원가입 페이지                                                                                                     | 메인 페이지                                                                                                               |
 |--------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
-| <p align="center"> <img src="https://github.com/limbaba1120/limbaba1120_images/blob/master/notion_image/omocha_login.gif" width="350"></p> | <p align="center"><img src="https://github.com/limbaba1120/limbaba1120_images/blob/master/notion_image/omocha_mainpage.gif" width="350"></p> |
+| <p align="center"> <img src="https://github.com/limbaba1120/limbaba1120_images/blob/master/notion_image/omocha_record_login.gif" width="350"></p> | <p align="center"><img src="https://github.com/limbaba1120/limbaba1120_images/blob/master/notion_image/omocha_record_mainpage.gif" width="350"></p> |
 | 회원가입, 로그인을 제공합니다.                                                                                                  | 경매 게시글 전체 확인, 검색을 제공합니다.                                                                                             |
 | - OAuth 2.0(Google, Naver)을 통한 로그인이 가능합니다.<br/>- 일반 회원가입으로 생성한 ID,PW로 로그인이 가능합니다.<br/>- 회원가입시 이메일 인증을 하여야 합니다.     | - 배너를 통해 여러 정보를 제공합니다.<br/>- 인기 경매, 신규 경매 상품, 마감 임박 상품을 확인 할 수 있습니다.                                                 |
 
