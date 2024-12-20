@@ -168,32 +168,37 @@
 
 ### **Alarm**
 
-  
-<table style="width: 350px !important; margin-top: 20px;">
-  <thead>
-    <tr>
-      <th style="width:100%">Alarm</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td align="center" width="25%">
-        <img src="https://github.com/gooot/ProjectImage/blob/main/Omocha/v2/alarm.gif" width="100%" max-width="350px" />
-      </td>
-    </tr>
-    <tr>
-      <td>입찰과 경매에 관한 알림을 보냅니다.</td>
-    </tr>
-    <tr>
-      <td>
-        - 내가 판매하는 물품에 입찰이 걸릴 때 알람을 보냅니다. <br />
-        - 다른 사용자가 나보다 더 높은 금액에 입찰을 걸 경우 알람을 보냅니다.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
+<div style="width: 350px"> 
+  <table style="width: 100%; margin-top: 20px;">
+    <thead>
+      <tr>
+        <th style="width:100%">Alarm</th>  
+        <th style="width:100%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td align="center" width="25%">
+          <img src="https://github.com/gooot/ProjectImage/blob/main/Omocha/v2/alarm.gif" width="100%" max-width="350px" />
+        </td>
+         <td align="center" width="25%">
+          <div></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <ul>
+            <li> 내가 판매하는 물품에 입찰이 걸릴 때 알람을 보냅니다. <br /></li>
+            <li> 다른 사용자가 나보다 더 높은 금액에 입찰을 걸 경우 알람을 보냅니다.</li>
+          </url>
+        </td>
+        <td>
+          <div></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 
 ## ⚙️ **기술 스택**
