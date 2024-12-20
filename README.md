@@ -165,6 +165,44 @@
   </tbody>
 </table>
 
+
+### **Alarm | Review**
+
+<table style="width: 100%; table-layout: fixed; margin-top: 20px;">
+  <thead>
+    <tr>
+      <th style="width: 50%;">QnA</th>
+      <th style="width: 50%;">Review</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center" width="50%">
+        <img src="https://github.com/gooot/ProjectImage/blob/main/Omocha/v2/alarm.gif" width="100%" max-width="350px" />
+      </td>
+      <td align="center" width="50%">
+<!--         <img src="https://github.com/gooot/ProjectImage/blob/main/Omocha/v2/like.gif" width="100%" max-width="350px" /> -->
+      </td>
+    </tr>
+    <tr>
+      <td>입찰과 경매에 관한 알림을 보냅니다.</td>
+      <td> 추가 예정 </td>
+    </tr>
+    <tr>
+      <td>
+        - 내가 판매하는 물품에 입찰이 걸릴 때 알람을 보냅니다.
+        - 다른 사용자가 나보다 더 높은 금액에 입찰을 걸 경우 알람을 보냅니다.
+      </td>
+      <td>
+        추가 예정
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
 ## ⚙️ **기술 스택**
 
 <details>
@@ -206,7 +244,7 @@
 
 ## ✍️ **ERD**
 
-![erd](https://github.com/gooot/ProjectImage/blob/main/Omocha/erd/omachaERD.png)
+![ERD](https://github.com/gooot/ProjectImage/blob/main/Omocha/erd/omochaERD.png)
 
 ## 💡 **System Architecture**
 
